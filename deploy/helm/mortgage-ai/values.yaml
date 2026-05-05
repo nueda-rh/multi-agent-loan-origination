@@ -214,8 +214,16 @@ minio:
       cpu: "500m"
 
 # MLflow observability (RHOAI 3.4+)
+# When kagenti.mlflow.autoManaged=true, the Kagenti Operator MLflow controller
+# handles MLflow automatically: auto-discovers MLflow from the
+# mlflows.mlflow.opendatahub.io CR, creates experiments, injects env vars,
+# and configures RBAC. Manual RBAC and env var configuration below is skipped.
+# Prerequisites for Kagenti-managed MLflow:
+#   1. Enable MLflow in the DataScienceCluster (RHOAI 3.4+)
+#   2. Install Kagenti with MLflow controller enabled
+#   3. Agents use mlflow[kubernetes]>=3.11 SDK
 mlflow:
-  # RBAC resources for MLflow server access
+  # RBAC resources for MLflow server access (skipped when kagenti.mlflow.autoManaged=true)
   rbac:
     enabled: true  # Enable when deploying with RHOAI MLflow
     # Creates: ClusterRole, ServiceAccount, ClusterRoleBinding
@@ -318,6 +326,11 @@ kagenti:
   a2aBasePort: 8080
   inboundPortsExclude: "8000"
   outboundPortsExclude: "5432,9000,8081"
+  # When true, delegate MLflow RBAC + env var injection to the Kagenti Operator
+  # MLflow controller. Requires Kagenti version with MLflow controller support.
+  # Keep false until the Kagenti MLflow controller is available in your cluster.
+  mlflow:
+    autoManaged: false
 
 # Seed data (demo data for demos / dev environments)
 seed:
