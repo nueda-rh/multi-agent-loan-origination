@@ -316,4 +316,7 @@ When the variable is unset or empty, the feature is disabled and the underwriter
 
 ## Tags
 
-- **Industry**: Financial Services
+- **Industry**: Banking and securities
+- **Product**: Red Hat OpenShift AI
+- **Use case**: Multi-agent orchestration
+- **Contributor org**: Red Hat
